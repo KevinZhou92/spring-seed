@@ -1,5 +1,7 @@
 package com.pengcheng.springseed.domain;
 
+import com.pengcheng.springseed.dto.UserDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -27,9 +29,6 @@ public class User {
 
     @Column(name = "password")
     private String password;
-
-    @Column(name = "salt")
-    private String salt;
 
     public Integer getId() {
         return id;
@@ -79,11 +78,7 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public UserDto toUserDto() {
+        return new UserDto(this.userName, this.firstName, this.lastName, this.email);
     }
 }

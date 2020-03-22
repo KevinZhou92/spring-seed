@@ -17,7 +17,6 @@ CREATE TABLE `user` (
     `last_name` VARCHAR ( 255 ) COLLATE utf8_bin DEFAULT NULL,
     `email` VARCHAR ( 255 ) COLLATE utf8_bin DEFAULT NULL,
 	`password` VARCHAR ( 255 ) COLLATE utf8_bin NOT NULL,
-	`salt` VARCHAR ( 255 ) COLLATE utf8_bin DEFAULT NULL,
 	PRIMARY KEY ( `id` )
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 SET FOREIGN_KEY_CHECKS = 1;

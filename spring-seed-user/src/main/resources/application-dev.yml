@@ -6,6 +6,7 @@ spring:
     password: zpc920515
     initialization-mode: always
     schema: classpath:/db/schema.sql
+    data: classpath:/db/data.sql
 
   jpa:
     show-sql: true
@@ -13,7 +14,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 
   redis:
     host: localhost
@@ -26,8 +27,7 @@ spring:
         max-wait: 1ms
         max-active: 8
         min-idle: 0
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  params: count=countSql
+logging.level.org.springframework.boot.autoconfigure: ERROR

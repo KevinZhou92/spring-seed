@@ -3,7 +3,7 @@ package com.pengcheng.springseed;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.pengcheng.springseed")
 public class SpringSeedApplication {
 
 	public static void main(String[] args) {

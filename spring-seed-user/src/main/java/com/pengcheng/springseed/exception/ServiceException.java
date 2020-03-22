@@ -1,4 +1,17 @@
 package com.pengcheng.springseed.exception;
 
-public class ServiceException {
+import com.pengcheng.springseed.enums.ServiceEnums;
+
+
+public class ServiceException extends RuntimeException {
+
+    private ServiceEnums serviceEnums;
+
+    public ServiceEnums getServiceEnums() {
+        return serviceEnums;
+    }
+    public ServiceException(ServiceEnums serviceEnums) {
+        super(serviceEnums.getMessage());
+        this.serviceEnums = serviceEnums;
+    }
 }
