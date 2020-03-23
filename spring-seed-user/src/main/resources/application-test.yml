@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    schema: classpath:/db/test-schema.sql
+    data: classpath:/db/test-data.sql
+    username: monsterzpc
+    password: zpc920515
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+
+  h2:
+    console:
+      enabled: true
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+logging.level.org.springframework.boot.autoconfigure: ERROR

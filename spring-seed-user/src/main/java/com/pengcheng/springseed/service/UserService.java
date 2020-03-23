@@ -46,12 +46,8 @@ public class UserService {
     }
 
     private User getUserByUserName(String username) {
-        try {
-            User user = userRepository.findByUserName(username);
-            return user;
-        } catch (DataAccessException e) {
-            throw new ServiceException(ServiceEnums.FAILED);
-        }
+        User user = userRepository.findByUserName(username);
+        return user;
     }
 
 
@@ -70,7 +66,7 @@ public class UserService {
         try {
             User user = getUserByUserName(userName);
             return user.toUserDto();
-        } catch (DataAccessException e) {
+        } catch (NullPointerException e) {
             throw new ServiceException(ServiceEnums.USER_NOT_EXISTED);
         }
     }

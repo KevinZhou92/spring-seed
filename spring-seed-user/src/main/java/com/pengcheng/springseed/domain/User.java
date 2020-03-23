@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table( name = "user",
-        schema = "spring_seed",
         indexes = {@Index(columnList = "user_name")}
         )
 public class User {
