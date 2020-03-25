@@ -2,9 +2,9 @@ package com.pengcheng.springseed.controller;
 
 import com.pengcheng.springseed.dto.RegisterDto;
 import com.pengcheng.springseed.dto.UserDto;
+import com.pengcheng.springseed.dto.UserPasswordUpdateDto;
 import com.pengcheng.springseed.service.UserService;
 import com.pengcheng.springseed.service.results.BaseResult;
-import com.pengcheng.springseed.service.results.FailResult;
 import com.pengcheng.springseed.service.results.SuccessResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,10 +29,13 @@ public class UserController {
     @PostMapping(path = "/register")
     @ResponseBody
     public BaseResult<?> registerUser(@RequestBody @Valid RegisterDto registerDto) {
-        boolean success = userService.registerUser(registerDto);
-        if (!success) {
-            return new FailResult<>();
-        }
+        userService.registerUser(registerDto);
+        return new SuccessResult<>();
+    }
+    @PatchMapping(path = "/password")
+    @ResponseBody
+    public BaseResult<?> updatePassword(@RequestBody @Valid UserPasswordUpdateDto userPasswordUpdateDto) {
+        userService.updatePassword(userPasswordUpdateDto);
         return new SuccessResult<>();
     }
 

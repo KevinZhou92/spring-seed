@@ -4,11 +4,13 @@ import com.pengcheng.springseed.dao.UserRepository;
 import com.pengcheng.springseed.domain.User;
 import com.pengcheng.springseed.dto.RegisterDto;
 import com.pengcheng.springseed.dto.UserDto;
+import com.pengcheng.springseed.dto.UserPasswordUpdateDto;
 import com.pengcheng.springseed.enums.ServiceEnums;
 import com.pengcheng.springseed.exception.ServiceException;
 import com.pengcheng.springseed.security.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -46,8 +48,12 @@ public class UserService {
     }
 
     private User getUserByUserName(String username) {
-        User user = userRepository.findByUserName(username);
-        return user;
+        try {
+            User user = userRepository.findByUserName(username);
+            return user;
+        } catch (DataAccessException e) {
+            throw new DataRetrievalFailureException("Cannot find user by username: " + username);
+        }
     }
 
 
@@ -69,5 +75,24 @@ public class UserService {
         } catch (NullPointerException e) {
             throw new ServiceException(ServiceEnums.USER_NOT_EXISTED);
         }
+    }
+
+    public boolean updatePassword(UserPasswordUpdateDto userPasswordUpdateDto) {
+        User user = this.getUserByUserName(userPasswordUpdateDto.getUserName());
+        if (user == null) {
+            throw new ServiceException(ServiceEnums.USER_NOT_EXISTED);
+        }
+
+        String oldPassword = userPasswordUpdateDto.getOldPassword();
+        String encodedOldPassword = user.getPassword();
+        if (!PasswordUtils.verifyPassword(oldPassword, encodedOldPassword)) {
+            throw new ServiceException(ServiceEnums.INCORRECT_PASSWORD);
+        }
+        String newPassword = userPasswordUpdateDto.getNewPassword();
+        String newEncodedPassword = PasswordUtils.encryptPassword(newPassword);
+        user.setPassword(newEncodedPassword);
+        this.insertUser(user);
+
+        return true;
     }
 }

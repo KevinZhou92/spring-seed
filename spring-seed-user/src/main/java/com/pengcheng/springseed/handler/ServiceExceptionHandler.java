@@ -26,8 +26,8 @@ public class ServiceExceptionHandler {
     @ExceptionHandler({ServiceException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public BaseResult handleServiceException(ServiceException e) {
-        return new FailResult(e.getServiceEnums());
+    public BaseResult<?> handleServiceException(ServiceException e) {
+        return new FailResult<>(e.getServiceEnums());
     }
 
     /**
